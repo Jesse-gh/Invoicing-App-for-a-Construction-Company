@@ -1,3 +1,25 @@
+## 🧩 Try Out the Software
+
+If you already have **.NET Desktop Runtime (version 8.0 or newer)** installed, use the smaller build:
+
+[⬇️ Download the 1 MB version (Requires .NET Desktop Runtime)](Try%20the%20Software%20(Download%20ZIP)%20-%20Extract%20and%20Launch%20the%20EXE/1%20MB%20Version%20-%20Requires%20.NET%20installed.zip)
+
+You can also test the application without installing .NET:
+
+[⬇️ Download the 59 MB version (No .NET installation required)](Try%20the%20Software%20(Download%20ZIP)%20-%20Extract%20and%20Launch%20the%20EXE/59%20MB%20Version%20-%20No%20.NET%20required.zip)
+
+> 💡 If you need to install the runtime manually, you can download **.NET Desktop Runtime 8.0** from Microsoft:  
+> [https://dotnet.microsoft.com/en-us/download/dotnet/8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+
+---
+
+## 💻 Source Code
+
+For IT-savvy users, the full Visual Studio project is available in the **Source Code** folder.
+It can be opened, for example, in Visual Studio 2022 or Visual Studio Code.
+
+---
+
 # 🧾 LaskutusOhjelma (Invoicing Software for a Construction Company)
 
 *A WPF-based full-stack invoicing application built in C# for a fictional construction company, featuring SQLite, MVVM architecture, and a clean modern UI.*
@@ -38,28 +60,6 @@
 | **SQLite (Microsoft.Data.Sqlite)** | Local database engine |
 | **MVVM architecture** | Organized folder structure separating UI and business logic |
 | **Visual Studio Enterprise 2022** | Development environment |
-
----
-
-## 🧩 Try Out the Software
-
-If you already have **.NET Desktop Runtime (version 8.0 or newer)** installed, use the smaller build:
-
-[⬇️ Download the 1 MB version (Requires .NET Desktop Runtime)](Try%20the%20Software%20(Download%20ZIP)%20-%20Extract%20and%20Launch%20the%20EXE/1%20MB%20Version%20-%20Requires%20.NET%20installed.zip)
-
-You can also test the application without installing .NET:
-
-[⬇️ Download the 59 MB version (No .NET installation required)](Try%20the%20Software%20(Download%20ZIP)%20-%20Extract%20and%20Launch%20the%20EXE/59%20MB%20Version%20-%20No%20.NET%20required.zip)
-
-> 💡 If you need to install the runtime manually, you can download **.NET Desktop Runtime 8.0** from Microsoft:  
-> [https://dotnet.microsoft.com/en-us/download/dotnet/8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-
----
-
-## 💻 Source Code
-
-For IT-savvy users, the full Visual Studio project is available in the **Source Code** folder.
-It can be opened, for example, in Visual Studio 2022 or Visual Studio Code.
 
 ---
 
