@@ -1,0 +1,1310 @@
+﻿<Window x:Class="LaskutusOhjelma.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LaskutusOhjelma"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="830" Width="1045" ResizeMode="NoResize">
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF6372A9" Offset="0"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    
+    <Window.Resources>
+        <!-- DataGridin yhtenainen tyyli -->
+        <Style x:Key="UnifiedGrid" TargetType="DataGrid">
+            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Height" Value="310"/>
+            <Setter Property="HeadersVisibility" Value="All"/>
+            <Setter Property="RowHeaderWidth" Value="22"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Nappien yhteinainen tyyli -->
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Width"  Value="120"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+        </Style>
+
+        <!-- Kenttien yhtenainen tyyli -->
+        <Style x:Key="InputTextBox" TargetType="TextBox">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="Padding" Value="2,0,2,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- ComboBoxien yhtenainen tyyli -->
+        <Style x:Key="InputComboBox" TargetType="ComboBox">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="Padding" Value="2,0,2,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- DatePickerin yhtenainen tyyli -->
+        <Style x:Key="InputDatePicker" TargetType="DatePicker">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="MinHeight" Value="22"/>
+        </Style>
+
+        <!-- Otsikoiden yhtenainen tyyli -->
+        <Style x:Key="RightAlignedLabel" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <!-- DatePickerin tekstikentan keskitys (paivays siis nakyy keskelle kenttaa, eika laidoissa) -->
+        <Style TargetType="DatePickerTextBox">
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        
+        <CollectionViewSource x:Key="TuotteetSource" Source="{Binding Tuotteet}" />
+    </Window.Resources>
+
+    
+    <!-- TabControl on kaytossa oleva layot-komponentti, jonka sisassa kaikki GUI:n komponentit ovat. Se alkaa tasta. -->
+    <TabControl SelectedIndex="2" Background="Transparent" BorderThickness="0">
+        <TabControl.ItemContainerStyle>
+            <Style TargetType="TabItem">
+                <Setter Property="Width" Value="150"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+        </TabControl.ItemContainerStyle>
+
+        <!-- Tuotetiedot-valilehti -->
+        <TabItem>
+            <TabItem.Header>
+                <Border Padding="20,10">
+                    <TextBlock Text="Tuotetiedot" FontSize="15"/>
+                </Border>
+            </TabItem.Header>
+
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalContentAlignment="Left">
+                <Grid Margin="0" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="80,10,10,6">
+                        <TextBlock Text="Tuotetiedot"
+                                  FontSize="34"
+                                  FontWeight="Bold"
+                                  Foreground="Black"
+                                  Margin="2,2,0,0"/>
+                        <TextBlock Text="Tuotetiedot"
+                                  FontSize="34"
+                                  FontWeight="Bold"
+                                  Foreground="White"/>
+                    </Grid>
+
+                    <!-- Tuotetiedot-valilehden DataGrid alkaa tasta -->
+                    <DataGrid Grid.Row="1" x:Name="xnameTuotteet"
+                      Margin="11,0,10,0"
+                      Width="990.5" Height="310"
+                      HorizontalAlignment="Left"
+                      ItemsSource="{Binding Tuotteet}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      SelectionChanged="xnameTuotteet_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Tuotteen numero"  Binding="{Binding TuoteId}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            
+                                <DataGridTextColumn Header="Tuotteen nimi"    Binding="{Binding Nimi}"/>
+                                <DataGridTextColumn Header="Tuotteen kuvaus"  Binding="{Binding Kuvaus}"/>
+                                <DataGridTextColumn Header="Tuoteryhma"       Binding="{Binding Tuoteryhma}">
+                                    
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Yksikko -->
+                            <DataGridTextColumn Header="Yksikko" Binding="{Binding Yksikko}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Yksikkohinta -->
+                            <DataGridTextColumn Header="Yksikkohinta"
+                                 Binding="{Binding Hinta, StringFormat=N2}" Width="Auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Language" Value="fi-FI"/>
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Grid Grid.Row="2" Margin="10,8,10,6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Lomakkeen vasemman puolen napit -->
+                        <StackPanel Orientation="Horizontal" Grid.Column="0">
+                            <Button Style="{StaticResource ActionButton}" Content="Lisaa uusi tuote"
+                            Click="BtnLisaaTuote_Click"/>
+                            <Button Style="{StaticResource ActionButton}" Content="Paivita/Muokkaa"
+                            Click="BtnPaivitaTuote_Click"/>
+                            <Button Style="{StaticResource ActionButton}" Content="Poista tuote"
+                            Click="BtnPoistaTuote_Click"/>
+                            <Button Style="{StaticResource ActionButton}" Content="Tyhjenna kentat"
+                            Margin="0" Click="BtnTyhjennaKentat_Click"/>
+                        </StackPanel>
+
+                        <!-- Ohje-nappi (Tuotetiedot-valilehdella) -->
+                        <Button Grid.Column="2" x:Name="btnOhje" Width="70" Height="28"
+                        HorizontalAlignment="Right"
+                        Click="btnOhje_Click">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Image Source="/Resources/ikoni_ohje.png" Height="20" Width="20" Margin="0,0,5,0"/>
+                                <TextBlock Text="Ohje" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <!-- Kentat -->
+                    <Grid Grid.Row="3" Margin="10,0,10,12" HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="450"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Nimi -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Tuotteen nimi:" 
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                           Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox  Grid.Row="0" Grid.Column="1" x:Name="tbNimi" Width="450" MaxLength="80" 
+                           Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+
+                        <!-- Kuvaus -->
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Kuvaus:" 
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                           Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox  Grid.Row="1" Grid.Column="1" x:Name="tbKuvaus" Width="450" MaxLength="255" 
+                           Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+
+                        <!-- Tuoteryhma -->
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Tuoteryhma:" 
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                           Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox  Grid.Row="2" Grid.Column="1" x:Name="tbTuoteryhma" Width="450" MaxLength="80" 
+                           Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+
+                        <!-- Yksikko -->
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Yksikko:" 
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                           Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox  Grid.Row="3" Grid.Column="1" x:Name="tbYksikko" Width="450" MaxLength="17" 
+                           Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+
+                        <!-- Hinta -->
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Hinta:" 
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                           Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox  Grid.Row="4" Grid.Column="1" x:Name="tbHinta" Width="450" 
+                           Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </TabItem>
+
+        
+        <!--Asiakastiedot-valilehti-->
+        <TabItem>
+            <TabItem.Header>
+                <Border Padding="20,10">
+                    <TextBlock Text="Asiakastiedot" FontSize="15"/>
+                </Border>
+            </TabItem.Header>
+
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalContentAlignment="Left">
+                <Grid Margin="0" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Otsikko (iso valkoinen) -->
+                    <Grid Grid.Row="0" Margin="80,10,10,6">
+                        <TextBlock Text="Asiakastiedot"
+                                  FontSize="34"
+                                  FontWeight="Bold"
+                                  Foreground="Black"
+                                  Margin="2,2,0,0"/>
+                        <TextBlock Text="Asiakastiedot"
+                                  FontSize="34"
+                                  FontWeight="Bold"
+                                  Foreground="White"/>
+                    </Grid>
+
+                    <!-- Asiakastiedot-valilehden DataGrid alkaa tasta -->
+                    <DataGrid Grid.Row="1" x:Name="xnameAsiakkaat"
+                      Margin="10,0,10,0"
+                      Width="990" Height="310"
+                      HorizontalAlignment="Left"
+                      ItemsSource="{Binding Asiakkaat}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      SelectionChanged="xnameAsiakkaat_SelectionChanged">
+                        
+                        <!-- Sarakkeet -->
+                        
+                        <!-- Asakkaan numero -->
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Asiakkaan numero" Binding="{Binding AsiakasId}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Asiakkaan nimi -->
+                            <DataGridTextColumn Header="Asiakkaan nimi"   Binding="{Binding Nimi}"/>
+                            <DataGridTextColumn Header="Maa"              Binding="{Binding Maa}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Kaupunki -->
+                            <DataGridTextColumn Header="Kaupunki"         Binding="{Binding Kaupunki}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Postinumero -->
+                            <DataGridTextColumn Header="Postinumero"      Binding="{Binding Postinumero}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Katuosoite -->
+                            <DataGridTextColumn Header="Katuosoite"       Binding="{Binding Katuosoite}"/>
+
+                            <!-- Puhelinnumero -->
+                            <DataGridTextColumn Header="Puhelinnumero"    Binding="{Binding Puhelinnumero}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Email -->
+                            <DataGridTextColumn Header="Email"            Binding="{Binding Email}"/>
+                            
+                            <!-- Asiakkaan tyyppi -->
+                            <DataGridTextColumn Header="Asiakkaan tyyppi" Binding="{Binding Asiakastyyppi}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Nappirivi -->
+                    <Grid Grid.Row="2" Margin="10,8,10,6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Orientation="Horizontal" Grid.Column="0">
+                            <Button Style="{StaticResource ActionButton}" Content="Lisaa uusi asiakas"
+                                Click="BtnLisaaAsiakas_Click"/>
+                            <Button Style="{StaticResource ActionButton}" Content="Paivita/Muokkaa"
+                                Click="BtnPaivitaAsiakas_Click"/>
+                            <Button Style="{StaticResource ActionButton}" Content="Poista asiakas"
+                                Click="BtnPoistaAsiakas_Click"/>
+                            <Button Style="{StaticResource ActionButton}" Content="Tyhjenna kentat"
+                                Margin="0" Click="BtnTyhjennaAsiakasKentat_Click"/>
+                        </StackPanel>
+
+                        <!-- Ohje-nappi (Asiakastiedot-valilehdella) -->
+                        <Button Grid.Column="2" x:Name="btnOhje_asiakastiedot"
+                            Width="70" Height="28"
+                            HorizontalAlignment="Right"
+                            Click="btnOhje_asiakastiedot_Click"
+                            ToolTip="Nayta asiakasvalilehden ohje">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Image Source="/Resources/ikoni_ohje.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                                <TextBlock Text="Ohje" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <!-- Kentat -->
+                    <Grid Grid.Row="3" Margin="10,0,10,12" HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="420"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Asiakkaan nimi -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Asiakkaan nimi:" 
+                            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                            Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox   Grid.Row="0" Grid.Column="1" x:Name="tbAsNimi" Width="420" MaxLength="80" 
+                            Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+
+                        <!-- Maa -->
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Maa:" 
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                           Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox   Grid.Row="1" Grid.Column="1" x:Name="tbAsMaa" Width="420" MaxLength="35" 
+                           Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+
+                        <!-- Kaupunki -->
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Kaupunki:" 
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                           Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox   Grid.Row="2" Grid.Column="1" x:Name="tbAsKaupunki" Width="420" MaxLength="35" 
+                           Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+
+                        <!-- Postinumero -->
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Postinumero:" 
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                           Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox   Grid.Row="3" Grid.Column="1" x:Name="tbAsPostinumero" Width="420" MaxLength="10" 
+                           Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+
+                        <!-- Katuosoite -->
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Katuosoite:" 
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                           Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox   Grid.Row="4" Grid.Column="1" x:Name="tbAsKatuosoite" Width="420" MaxLength="100" 
+                           Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+
+                        <!-- Puhelinnumero -->
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Puhelinnumero:" 
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                           Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox   Grid.Row="5" Grid.Column="1" x:Name="tbAsPuhelin" Width="420" MaxLength="30" 
+                           Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+
+                        <!-- Email -->
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="Email:" 
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                           Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox   Grid.Row="6" Grid.Column="1" x:Name="tbAsEmail" Width="420" MaxLength="35" 
+                           Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+
+                        <!-- Asiakkaan tyyppi -->
+                        <TextBlock Grid.Row="7" Grid.Column="0" Text="Asiakkaan tyyppi:" 
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0"
+                           Style="{StaticResource RightAlignedLabel}"/>
+                        <TextBox   Grid.Row="7" Grid.Column="1" x:Name="tbAsTyyppi" Width="420" MaxLength="40" 
+                           Margin="0,2,0,2" Style="{StaticResource InputTextBox}"/>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </TabItem>
+
+
+        <!-- Laskut-valilehti -->
+        <TabItem>
+            <TabItem.Header>
+                <Border Padding="20,10">
+                    <TextBlock Text="Laskut" FontSize="15"/>
+                </Border>
+            </TabItem.Header>
+
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                VerticalScrollBarVisibility="Auto"
+                HorizontalContentAlignment="Left">
+                <Grid Margin="0" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="80,10,10,6">
+                        <TextBlock Text="Laskut" FontSize="34" FontWeight="Bold"
+                   Foreground="Black" Margin="2,2,0,0"/>
+                        <TextBlock Text="Laskut" FontSize="34" FontWeight="Bold"
+                   Foreground="White"/>
+                    </Grid>
+
+                    <!-- Laskut-valilehden DataGrid alkaa tasta -->
+                    <DataGrid Grid.Row="1"
+                      x:Name="xnameLaskut"
+                      Margin="15,0,10,8"
+                      Width="994" Height="310"
+                      HorizontalAlignment="Left"
+                      ItemsSource="{Binding Laskut}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      SelectionChanged="xnameLaskut_SelectionChanged">
+                        <DataGrid.Columns>
+                            
+                            <!-- Laskun numero -->
+                            <DataGridTextColumn Header="Laskun numero" Binding="{Binding LaskuId}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Asiakkaan numero -->
+                            <DataGridTextColumn Header="Asiakkaan numero" Binding="{Binding AsiakasId}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Laskun numero asiakkaalle -->
+                            <DataGridTextColumn Header="Laskun numero asiakkaalle" Binding="{Binding LaskunNumeroAsiakkaalle}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Tilauspaiva -->
+                            <DataGridTextColumn Header="Tilauspaiva" Binding="{Binding Tilauspaiva}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Erapaiva -->
+                            <DataGridTextColumn Header="Erapaiva" Binding="{Binding Erapaiva}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Maksun tila -->
+                            <DataGridTextColumn Header="Maksun tila" Binding="{Binding MaksunTila}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Loppusumma -->
+                            <DataGridTextColumn Header="Loppusumma"
+                              Binding="{Binding Loppusumma, StringFormat=N2}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Language" Value="fi-FI"/>
+                                        <Setter Property="TextAlignment" Value="Right"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Lisatiedot -->
+                            <DataGridTextColumn Header="Lisatiedot" Binding="{Binding Lisatiedot}"/>
+                            
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Grid Grid.Row="2" Margin="15,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Lomakkeen vasemman puolen napit -->
+                        <StackPanel Orientation="Horizontal" Grid.Column="0">
+                            <Button Style="{StaticResource ActionButton}"
+                                Content="Lisaa uusi lasku"
+                                Click="BtnLisaaLasku_Click"/>
+
+                            <Button Style="{StaticResource ActionButton}"
+                                Content="Paivita/Muokkaa"
+                                Click="BtnPaivitaLasku_Click"/>
+
+                            <Button Style="{StaticResource ActionButton}"
+                                Content="Poista lasku"
+                                Click="BtnPoistaLasku_Click"/>
+
+                            <Button Style="{StaticResource ActionButton}"
+                                Content="Tyhjenna kentat"
+                                Margin="0"
+                                Click="BtnTyhjennaLaskuKentat_Click"/>
+                        </StackPanel>
+
+                        <!-- Ohje-nappi (Laskut-valilehdella) -->
+                        <Button Grid.Column="1" x:Name="btnLaskuOhje"
+                             Width="70" Height="28"
+                             UseLayoutRounding="False"
+                             SnapsToDevicePixels="False"
+                             HorizontalAlignment="Right" Margin="0,0,1,0"
+                             Click="BtnOhje_Laskut_Click">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Image Source="/Resources/ikoni_ohje.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                                <TextBlock Text="Ohje" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <!-- Lomake - Laskut-valilehden nappien alapuolella olevat komponentit -->
+                    <Grid Grid.Row="3"
+                      Margin="10,8,10,12"
+                      Grid.IsSharedSizeScope="True"
+                      Width="1000"
+                      HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="LblLeft"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="420" SharedSizeGroup="FldLeft"/>
+                            <ColumnDefinition Width="0"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="LblRight"/>
+                            <ColumnDefinition Width="4"/>
+                            <ColumnDefinition Width="420" SharedSizeGroup="FldRight"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="26"/>
+                            <RowDefinition Height="26"/>
+                            <RowDefinition Height="26"/>
+                            <RowDefinition Height="26"/>
+                            <RowDefinition Height="26"/>
+                            <RowDefinition Height="26"/>
+                            <RowDefinition Height="26"/>
+                            <RowDefinition Height="26"/>
+                            <RowDefinition Height="26"/>
+                            <RowDefinition Height="26"/>
+                            <RowDefinition Height="26"/>
+                            <RowDefinition Height="26"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Lomakkeen vasen puolisko -->
+
+                        <!-- Laskuttaja -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Laskuttaja:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                        <TextBox   Grid.Row="0" Grid.Column="2" x:Name="tbLaskuttaja"
+                            Style="{StaticResource InputTextBox}" Width="400"
+                            IsReadOnly="True" Margin="-18,0,0,0" FontWeight="Bold" TextAlignment="Center"
+                            Text="Rakennus Oy    Karjalankatu 3    80200    JOENSUU"/>
+
+                        <!-- Tilauspaiva (teksti & datepicker) -->
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Tilauspaiva:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                        <Grid Grid.Row="1" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="169"/>
+                                <ColumnDefinition Width="12"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="2"/>
+                                <ColumnDefinition Width="169"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <DatePicker x:Name="dpTilauspaiva"
+                                Grid.Column="0"
+                                Style="{StaticResource InputDatePicker}"
+                                SelectedDateChanged="dpTilauspaiva_SelectedDateChanged"/>
+
+                        <!-- Erapaiva (teksti & datepicker) -->
+                            <TextBlock Grid.Column="2" Text="Erapaiva:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+
+                            <DatePicker x:Name="dpErapaiva"
+                                Grid.Column="4"
+                                Style="{StaticResource InputDatePicker}"
+                                SelectedDateChanged="dpErapaiva_SelectedDateChanged"/>
+                        </Grid>
+
+                        <!-- Tyotuntimaara -->
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Tyotuntimaara:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                        <Grid Grid.Row="2" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="LblMaara"/>
+                                <ColumnDefinition Width="2"/>
+                                <ColumnDefinition Width="auto"  SharedSizeGroup="FldMaara"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="LblSum"/>
+                                <ColumnDefinition Width="2"/>
+                                <ColumnDefinition Width="auto" SharedSizeGroup="FldSum"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Tyotunnit -->
+                            <TextBox   Grid.Column="0" x:Name="tbTyotunnit" Width="83"
+                               Style="{StaticResource InputTextBox}" TextAlignment="Center"
+                               PreviewTextInput="NumberOnly_PreviewTextInput"
+                               DataObject.Pasting="NumberOnly_Paste"
+                               TextChanged="TyotInput_TextChanged"/>
+
+                            <!-- Tyotuntihinta -->
+                            <TextBlock Grid.Column="2" Text="Tyotuntihinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="4" x:Name="tbTyotuntihinta" Width="83"
+                               Style="{StaticResource InputTextBox}" TextAlignment="Center"
+                               PreviewTextInput="NumberOnly_PreviewTextInput"
+                               DataObject.Pasting="NumberOnly_Paste"
+                               TextChanged="TyotInput_TextChanged"/>
+
+                            <!-- Tyohinta -->
+                            <TextBlock Grid.Column="6" Text="Tyon hinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="8" x:Name="tbTyonHinta" Width="83"
+                               Style="{StaticResource InputTextBox}" IsReadOnly="True"
+                               TextAlignment="Center" FontWeight="Bold"/>
+                        </Grid>
+
+                        <!-- Loppusumma -->
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Loppusumma:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+
+                        <!-- Koko laskun hinta yhteensa -->
+                        <TextBox   Grid.Row="3" Grid.Column="2" x:Name="tbLaskunYhteensa"
+                             Style="{StaticResource InputTextBox}" Width="401"
+                             HorizontalAlignment="Left" IsReadOnly="True"
+                             TextAlignment="Center" FontWeight="Bold"/>
+
+                        <!-- Lomakkeen oikea puolisko -->
+
+                        <!-- Asiakas -->
+                        <TextBlock Grid.Row="0" Grid.Column="4" Text="Asiakas:" Style="{StaticResource RightAlignedLabel}" Margin="0,0,5,0"/>
+
+                        <!-- ComboBox, josta valitaan laskutettava asiakas -->
+                        <ComboBox  Grid.Row="0" Grid.Column="6" x:Name="cbAsiakas" Margin="-25,0,-2,0"
+                             Style="{StaticResource InputComboBox}" Width="409"
+                             ItemsSource="{Binding Asiakkaat}"
+                             DisplayMemberPath="Nimi" SelectedValuePath="AsiakasId"
+                             IsTextSearchEnabled="True" IsEditable="False" HorizontalContentAlignment="Center"/>
+
+                        <!-- Maksun tila -->
+                        <TextBlock Grid.Row="1" Grid.Column="4" Text="Maksun tila:" Style="{StaticResource RightAlignedLabel}" Margin="0,0,5,0"/>
+
+                        <ComboBox  Grid.Row="1" Grid.Column="6" x:Name="cbMaksunTila"  Margin="-25,0,-2,0"
+                             Style="{StaticResource InputComboBox}" Width="409" HorizontalContentAlignment="Center">
+                            <ComboBoxItem Content="Maksettu"/>
+                            <ComboBoxItem Content="Ei maksettu"/>
+                        </ComboBox>
+
+                        <!-- Lisatiedot -->
+                        <TextBlock Grid.Row="2" Grid.Column="4" Text="Lisatiedot:" Style="{StaticResource RightAlignedLabel}" Margin="0,0,5,0" VerticalAlignment="Top"/>
+
+                        <TextBox   Grid.Row="2" Grid.Column="6" x:Name="tbLisatiedot"  Margin="-25,0,-2,0"
+                             Grid.RowSpan="2" Width="409" TextWrapping="Wrap" AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto" FontSize="12"/>
+
+                        <!-- Materiaali/tuote -rivit 1–8 -->
+                        
+                        <!-- 1 -->
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Materiaali/tuote 1:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                        <Grid Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- ComboBox, josta valitaan materiaali/tuote -->
+                            <ComboBox Grid.Column="0" x:Name="cbMat1Nimi" Style="{StaticResource InputComboBox}"
+                                 DisplayMemberPath="Nimi" SelectedValuePath="TuoteId"
+                                 MaxDropDownHeight="193" Tag="{Binding ElementName=tbMat1Hinta}"
+                                 SelectionChanged="MatNimi_SelectionChanged">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem Content="&lt; Tyhja rivi &gt;"/>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource TuotteetSource}}"/>
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+
+                            <!-- Maara -->
+                            <TextBlock Grid.Column="2" Text="Maara:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="4" x:Name="tbMat1Maara" Style="{StaticResource InputTextBox}"
+                               Width="auto" TextAlignment="Center"
+                               PreviewTextInput="NumberOnly_PreviewTextInput"
+                               DataObject.Pasting="NumberOnly_Paste"
+                               TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yksikko (pelkka kentta, koska tekstia ei tarvita) -->
+                            <TextBox Grid.Column="6" x:Name="tbMat1Yks" Style="{StaticResource InputTextBox}"
+                                IsReadOnly="True" TextAlignment="Center"/>
+
+                            <!-- Yksikkohinta -->
+                            <TextBlock Grid.Column="8"  Text="Yksikkohinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="10" x:Name="tbMat1Hinta" Style="{StaticResource InputTextBox}"
+                                 Width="auto" TextAlignment="Center"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                                 DataObject.Pasting="NumberOnly_Paste"
+                                 TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yhteishinta -->
+                            <TextBlock Grid.Column="12" Text="Yhteishinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="14" x:Name="tbMat1Summa" Style="{StaticResource InputTextBox}"
+                              Width="auto" IsReadOnly="True" TextAlignment="Center" FontWeight="Bold"/>
+                        </Grid>
+
+
+                        <!-- 2 -->
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Materiaali/tuote 2:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                        <Grid Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- ComboBox, josta valitaan materiaali/tuote -->
+                            <ComboBox Grid.Column="0"
+                              x:Name="cbMat2Nimi"
+                              Style="{StaticResource InputComboBox}"
+                              DisplayMemberPath="Nimi"
+                              SelectedValuePath="TuoteId"
+                              MaxDropDownHeight="193"
+                              Tag="{Binding ElementName=tbMat2Hinta}"
+                              SelectionChanged="MatNimi_SelectionChanged">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem Content="&lt; Tyhja rivi &gt;"/>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource TuotteetSource}}"/>
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+
+                            <!-- Maara -->
+                            <TextBlock Grid.Column="2" Text="Maara:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="4" x:Name="tbMat2Maara" Width="auto" TextAlignment="Center"
+                               Style="{StaticResource InputTextBox}"
+                               PreviewTextInput="NumberOnly_PreviewTextInput"
+                               DataObject.Pasting="NumberOnly_Paste"
+                               TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yksikko (pelkka kentta, koska tekstia ei tarvita) -->
+                            <TextBox Grid.Column="6" x:Name="tbMat2Yks"
+                                 Style="{StaticResource InputTextBox}"
+                                 IsReadOnly="True" TextAlignment="Center"/>
+
+                            <!-- Yksikkohinta -->
+                            <TextBlock Grid.Column="8"  Text="Yksikkohinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="10" x:Name="tbMat2Hinta" Width="auto" TextAlignment="Center"
+                               Style="{StaticResource InputTextBox}"
+                               PreviewTextInput="NumberOnly_PreviewTextInput"
+                               DataObject.Pasting="NumberOnly_Paste"
+                               TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yhteishinta -->
+                            <TextBlock Grid.Column="12" Text="Yhteishinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="14" x:Name="tbMat2Summa" Width="auto" IsReadOnly="True"
+                              Style="{StaticResource InputTextBox}" TextAlignment="Center" FontWeight="Bold"/>
+                        </Grid>
+
+                        <!-- 3 -->
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="Materiaali/tuote 3:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                        <Grid Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- ComboBox, josta valitaan materiaali/tuote -->
+                            <ComboBox Grid.Column="0"
+                              x:Name="cbMat3Nimi"
+                              Style="{StaticResource InputComboBox}"
+                              DisplayMemberPath="Nimi"
+                              SelectedValuePath="TuoteId"
+                              MaxDropDownHeight="193"
+                              Tag="{Binding ElementName=tbMat3Hinta}"
+                              SelectionChanged="MatNimi_SelectionChanged">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem Content="&lt; Tyhja rivi &gt;"/>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource TuotteetSource}}"/>
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+
+                            <!-- Maara -->
+                            <TextBlock Grid.Column="2" Text="Maara:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="4" x:Name="tbMat3Maara" Width="auto" TextAlignment="Center"
+                               Style="{StaticResource InputTextBox}"
+                               PreviewTextInput="NumberOnly_PreviewTextInput"
+                               DataObject.Pasting="NumberOnly_Paste"
+                               TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yksikko (pelkka kentta, koska tekstia ei tarvita) -->
+                            <TextBox Grid.Column="6" x:Name="tbMat3Yks"
+                               Style="{StaticResource InputTextBox}"
+                               IsReadOnly="True" TextAlignment="Center"/>
+
+                            <!-- Yksikkohinta -->
+                            <TextBlock Grid.Column="8"  Text="Yksikkohinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="10" x:Name="tbMat3Hinta" Width="auto" TextAlignment="Center"
+                               Style="{StaticResource InputTextBox}"
+                               PreviewTextInput="NumberOnly_PreviewTextInput"
+                               DataObject.Pasting="NumberOnly_Paste"
+                               TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yhteishinta -->
+                            <TextBlock Grid.Column="12" Text="Yhteishinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="14" x:Name="tbMat3Summa" Width="auto" IsReadOnly="True"
+                               Style="{StaticResource InputTextBox}" TextAlignment="Center" FontWeight="Bold"/>
+                        </Grid>
+
+                        <!-- 4 -->
+                        <TextBlock Grid.Row="7" Grid.Column="0" Text="Materiaali/tuote 4:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                        <Grid Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- ComboBox, josta valitaan materiaali/tuote -->
+                            <ComboBox Grid.Column="0" x:Name="cbMat4Nimi" Style="{StaticResource InputComboBox}"
+                                DisplayMemberPath="Nimi" SelectedValuePath="TuoteId"
+                                MaxDropDownHeight="193" Tag="{Binding ElementName=tbMat4Hinta}"
+                                SelectionChanged="MatNimi_SelectionChanged">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem Content="&lt; Tyhja rivi &gt;"/>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource TuotteetSource}}"/>
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+
+                            <!-- Maara -->
+                            <TextBlock Grid.Column="2" Text="Maara:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="4" x:Name="tbMat4Maara" Style="{StaticResource InputTextBox}"
+                                 Width="auto" TextAlignment="Center"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                                 DataObject.Pasting="NumberOnly_Paste"
+                                 TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yksikko (pelkka kentta, koska tekstia ei tarvita) -->
+                            <TextBox Grid.Column="6" x:Name="tbMat4Yks" Style="{StaticResource InputTextBox}"
+                                IsReadOnly="True" TextAlignment="Center"/>
+
+                            <!-- Yksikkohinta -->
+                            <TextBlock Grid.Column="8"  Text="Yksikkohinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="10" x:Name="tbMat4Hinta" Style="{StaticResource InputTextBox}"
+                                 Width="auto" TextAlignment="Center"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                                 DataObject.Pasting="NumberOnly_Paste"
+                                 TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yhteishinta -->
+                            <TextBlock Grid.Column="12" Text="Yhteishinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="14" x:Name="tbMat4Summa" Style="{StaticResource InputTextBox}"
+                                 Width="auto" IsReadOnly="True" TextAlignment="Center" FontWeight="Bold"/>
+                        </Grid>
+
+                        <!-- 5 -->
+                        <TextBlock Grid.Row="8" Grid.Column="0" Text="Materiaali/tuote 5:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                        <Grid Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- ComboBox, josta valitaan materiaali/tuote -->
+                            <ComboBox Grid.Column="0" x:Name="cbMat5Nimi" Style="{StaticResource InputComboBox}"
+                                DisplayMemberPath="Nimi" SelectedValuePath="TuoteId"
+                                MaxDropDownHeight="193" Tag="{Binding ElementName=tbMat5Hinta}"
+                                SelectionChanged="MatNimi_SelectionChanged">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem Content="&lt; Tyhja rivi &gt;"/>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource TuotteetSource}}"/>
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+
+                            <!-- Maara -->
+                            <TextBlock Grid.Column="2" Text="Maara:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="4" x:Name="tbMat5Maara" Style="{StaticResource InputTextBox}"
+                                 Width="auto" TextAlignment="Center"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                                 DataObject.Pasting="NumberOnly_Paste"
+                                 TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yksikko (pelkka kentta, koska tekstia ei tarvita) -->
+                            <TextBox Grid.Column="6" x:Name="tbMat5Yks" Style="{StaticResource InputTextBox}"
+                              IsReadOnly="True" TextAlignment="Center"/>
+
+                            <!-- Yksikkohinta -->
+                            <TextBlock Grid.Column="8"  Text="Yksikkohinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="10" x:Name="tbMat5Hinta" Style="{StaticResource InputTextBox}"
+                                 Width="auto" TextAlignment="Center"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                                 DataObject.Pasting="NumberOnly_Paste"
+                                 TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yhteishinta -->
+                            <TextBlock Grid.Column="12" Text="Yhteishinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="14" x:Name="tbMat5Summa" Style="{StaticResource InputTextBox}"
+                                 Width="auto" IsReadOnly="True" TextAlignment="Center" FontWeight="Bold"/>
+                        </Grid>
+
+                        <!-- 6 -->
+                        <TextBlock Grid.Row="9" Grid.Column="0" Text="Materiaali/tuote 6:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                        <Grid Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- ComboBox, josta valitaan materiaali/tuote -->
+                            <ComboBox Grid.Column="0" x:Name="cbMat6Nimi" Style="{StaticResource InputComboBox}"
+                                DisplayMemberPath="Nimi" SelectedValuePath="TuoteId"
+                                MaxDropDownHeight="193" Tag="{Binding ElementName=tbMat6Hinta}"
+                                SelectionChanged="MatNimi_SelectionChanged">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem Content="&lt; Tyhja rivi &gt;"/>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource TuotteetSource}}"/>
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+
+                            <!-- Maara -->
+                            <TextBlock Grid.Column="2" Text="Maara:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="4" x:Name="tbMat6Maara" Style="{StaticResource InputTextBox}"
+                                 Width="auto" TextAlignment="Center"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                                 DataObject.Pasting="NumberOnly_Paste"
+                                 TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yksikko (pelkka kentta, koska tekstia ei tarvita) -->
+                            <TextBox Grid.Column="6" x:Name="tbMat6Yks" Style="{StaticResource InputTextBox}"
+                                 IsReadOnly="True" TextAlignment="Center"/>
+
+                            <!-- Yksikkohinta -->
+                            <TextBlock Grid.Column="8"  Text="Yksikkohinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="10" x:Name="tbMat6Hinta" Style="{StaticResource InputTextBox}"
+                                 Width="auto" TextAlignment="Center"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                                 DataObject.Pasting="NumberOnly_Paste"
+                                 TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yhteishinta -->
+                            <TextBlock Grid.Column="12" Text="Yhteishinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="14" x:Name="tbMat6Summa" Style="{StaticResource InputTextBox}"
+                                Width="auto" IsReadOnly="True" TextAlignment="Center" FontWeight="Bold"/>
+                        </Grid>
+
+                        <!-- 7 -->
+                        <TextBlock Grid.Row="10" Grid.Column="0" Text="Materiaali/tuote 7:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                        <Grid Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- ComboBox, josta valitaan materiaali/tuote -->
+                            <ComboBox Grid.Column="0" x:Name="cbMat7Nimi" Style="{StaticResource InputComboBox}"
+                                DisplayMemberPath="Nimi" SelectedValuePath="TuoteId"
+                                MaxDropDownHeight="193" Tag="{Binding ElementName=tbMat7Hinta}"
+                                SelectionChanged="MatNimi_SelectionChanged">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem Content="&lt; Tyhja rivi &gt;"/>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource TuotteetSource}}"/>
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+
+                            <!-- Maara -->
+                            <TextBlock Grid.Column="2" Text="Maara:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="4" x:Name="tbMat7Maara" Style="{StaticResource InputTextBox}"
+                                 Width="auto" TextAlignment="Center"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                                 DataObject.Pasting="NumberOnly_Paste"
+                                 TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yksikko (pelkka kentta, koska tekstia ei tarvita) -->
+                            <TextBox Grid.Column="6" x:Name="tbMat7Yks" Style="{StaticResource InputTextBox}"
+                                 IsReadOnly="True" TextAlignment="Center"/>
+
+                            <!-- Yksikkohinta -->
+                            <TextBlock Grid.Column="8"  Text="Yksikköhinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="10" x:Name="tbMat7Hinta" Style="{StaticResource InputTextBox}"
+                                 Width="auto" TextAlignment="Center"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                                 DataObject.Pasting="NumberOnly_Paste"
+                                 TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yhteishinta -->
+                            <TextBlock Grid.Column="12" Text="Yhteishinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="14" x:Name="tbMat7Summa" Style="{StaticResource InputTextBox}"
+                                Width="auto" IsReadOnly="True" TextAlignment="Center" FontWeight="Bold"/>
+                        </Grid>
+
+                        <!-- 8 -->
+                        <TextBlock Grid.Row="11" Grid.Column="0" Text="Materiaali/tuote 8:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                        <Grid Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="126"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- ComboBox, josta valitaan materiaali/tuote -->
+                            <ComboBox Grid.Column="0" x:Name="cbMat8Nimi" Style="{StaticResource InputComboBox}"
+                                DisplayMemberPath="Nimi" SelectedValuePath="TuoteId"
+                                MaxDropDownHeight="193" Tag="{Binding ElementName=tbMat8Hinta}"
+                                SelectionChanged="MatNimi_SelectionChanged">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem Content="&lt; Tyhja rivi &gt;"/>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource TuotteetSource}}"/>
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+
+                            <!-- Maara -->
+                            <TextBlock Grid.Column="2" Text="Maara:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="4" x:Name="tbMat8Maara" Style="{StaticResource InputTextBox}"
+                                 Width="auto" TextAlignment="Center"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                                 DataObject.Pasting="NumberOnly_Paste"
+                                 TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yksikko (pelkka kentta, koska tekstia ei tarvita) -->
+                            <TextBox Grid.Column="6" x:Name="tbMat8Yks" Style="{StaticResource InputTextBox}"
+                                IsReadOnly="True" TextAlignment="Center"/>
+
+                            <!-- Yksikkohinta -->
+                            <TextBlock Grid.Column="8"  Text="Yksikkohinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="10" x:Name="tbMat8Hinta" Style="{StaticResource InputTextBox}"
+                                 Width="auto" TextAlignment="Center"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                                 DataObject.Pasting="NumberOnly_Paste"
+                                 TextChanged="MaterialInput_TextChanged"/>
+
+                            <!-- Yhteishinta -->
+                            <TextBlock Grid.Column="12" Text="Yhteishinta:" Style="{StaticResource RightAlignedLabel}" Margin="0"/>
+                            <TextBox   Grid.Column="14" x:Name="tbMat8Summa" Style="{StaticResource InputTextBox}"
+                                 Width="auto" IsReadOnly="True" TextAlignment="Center" FontWeight="Bold"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </TabItem>
+    </TabControl>
+</Window>
