@@ -13,6 +13,16 @@ Or download the bigger file, which doesn't require .NET Desktop Runtime at all:
 
 ---
 
+## ⚙️ How to Run the Application
+
+1. Download and extract the chosen ZIP file.
+2. Open the extracted folder.
+3. Double-click the "LaskutusOhjelma.exe" file to launch the application.
+
+The application is portable, so there's no need to install it. Just extract one of the .zip files and run LaskutusOhjelma.exe file!
+
+---
+
 ## 💻 Source Code
 
 For IT-savvy users, the full Visual Studio project is available in the **Source Code** folder.
@@ -60,16 +70,6 @@ It can be opened, for example, in Visual Studio 2022 or Visual Studio Code.
 | **SQLite (Microsoft.Data.Sqlite)** | Local database engine |
 | **MVVM architecture** | Organized folder structure separating UI and business logic |
 | **Visual Studio Enterprise 2022** | Development environment |
-
----
-
-## ⚙️ How to Run the Application
-
-1. Download and extract the chosen ZIP file.
-2. Open the extracted folder.
-3. Double-click the "LaskutusOhjelma.exe" file to launch the application.
-
-The application is portable, so there's no need to install it. Just extract one of the .zip files and run LaskutusOhjelma.exe file!
 
 ---
 ## 💬 More about the Project
