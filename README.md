@@ -1,4 +1,4 @@
-## 🧩 Try Out the Software
+## 🧩 Try Out the Application
 
 If you already have **.NET Desktop Runtime (version 8.0 or newer)** installed, use the smaller build:
 
