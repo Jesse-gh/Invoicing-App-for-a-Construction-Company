@@ -31,9 +31,9 @@ Before running the application, please ensure your system meets the following mi
 
 | 🏷️ **Category** | 🔧 **Requirement** |
 |:--|:--|
-| **Operating System** | Microsoft Windows Operating System - 32-bit or higher |
+| **Operating System** | Microsoft Windows - 32-bit or higher |
 | **.NET Framework** | .NET Desktop Runtime - version 8.0 |
-| **Processor** | 1.6 GHz or faster processor |
+| **Processor** | 1.6 GHz or faster |
 | **Memory (RAM)** | Minimum 2 GB |
 | **Storage** | 160 MB of free disk space (bigger ZIP file's size after extraction) |
 | **Display Resolution** | 1920p × 1080p or more detailed resolution |
