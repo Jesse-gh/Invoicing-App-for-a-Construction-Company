@@ -132,7 +132,7 @@ If you'd like to get in touch, feel free to **contact me**:
 
 And if you want to, let's connect on LinkedIn:
 
-**LinkedIn:** www.linkedin.com/in/jesse-honkavaara-287521357
+**LinkedIn:** linkedin.com/in/jesse-honkavaara-287521357
 
 ---
 
