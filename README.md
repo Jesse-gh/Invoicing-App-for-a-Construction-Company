@@ -29,7 +29,7 @@ Just extract one of the .zip files and run LaskutusOhjelma.exe file!
 
 Before running the application, please ensure your system meets the following minimum requirements:
 
-| Category | Requirement |
+| **Category** | **Requirement** |
 |:--|:--|
 | **Operating System** | Microsoft Windows Operating System - 32-bit or higher |
 | **.NET Framework** | .NET Desktop Runtime - version 8.0 |
