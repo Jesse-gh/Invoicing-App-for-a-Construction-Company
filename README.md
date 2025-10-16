@@ -122,11 +122,13 @@ I enjoy working with **various programming languages** and I'm continuously expa
 At this stage of my journey, gaining **practical experience** and developing as an IT professional matter more to me than compensation.
 Finding an internship position isn’t easy, so to increase my chances, I’m also open to unpaid or volunteer-based opportunities, as long as they provide meaningful learning experience and professional growth.
 
-If you'd like to get in touch, feel free to **contact me**:
-
 ---
 
+If you'd like to get in touch, feel free to **contact me**:
+
 **Email:** jesse.honkavaara@gmail.com
+
+---
 
 And if you want to, let's connect on LinkedIn:
 
