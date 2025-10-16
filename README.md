@@ -1,11 +1,11 @@
 ## 🧩 Try Out the Application
 
-- This application works on any modern Microsoft Windows operating systems (32 bit Windows OS or higher).
+This application works on any modern Microsoft Windows operating systems (32 bit Windows OS or higher).
 - If you already have **.NET Desktop Runtime (version 8.0 or newer)** installed, you can download the smaller build:
 
 [⬇️ Download the 1 MB version (Requires .NET Desktop Runtime)](Try%20the%20Software%20(Download%20ZIP)%20-%20Extract%20and%20Launch%20the%20EXE/1%20MB%20Version%20-%20Requires%20.NET%20installed.zip)
 
-Or download the bigger file below, which doesn't require .NET Desktop Runtime at all:
+- Or download the bigger file below, which doesn't require .NET Desktop Runtime at all:
 
 [⬇️ Download the 59 MB version (No .NET Desktop Runtime installation required)](Try%20the%20Software%20(Download%20ZIP)%20-%20Extract%20and%20Launch%20the%20EXE/59%20MB%20Version%20-%20No%20.NET%20required.zip)
 
