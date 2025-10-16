@@ -112,13 +112,15 @@ It can be opened, for example, in Visual Studio 2022 or Visual Studio Code.
 
 ## 💼 Opportunities & Contact
 
-I'm an **IT student at Karelia University of Applied Sciences**, currently looking for **IT internship opportunities** anywhere in Finland —  
-and I'm also open to possibilities abroad, especially within the **Nordic countries**.  
+As of autumn 2025, I'm an **IT student** at a University of Applied Sciences, currently looking for **IT internship opportunities** anywhere in Finland.
+English is a strength of mine, so I'm also **open to possibilities abroad**, especially within the Nordic countries or other nearby regions,
+but the right opportunity elsewhere would also interest me.
 
-I'm interested in **a wide range of IT roles**, particularly those related to **software development, databases, automation, and DevOps**.  
-I enjoy working with **various programming languages** and continuously expanding my technical skill set.  
+I'm interested in **a wide range of IT roles**, particularly those related to **software development, databases, automation/AI, and DevOps**.  
+I enjoy working with **various programming languages** and I'm continuously expanding my technical skill set.  
 
-At this stage of my journey, gaining **practical experience** and developing as an IT professional matter more to me than compensation.  
+At this stage of my journey, gaining **practical experience** and developing as an IT professional matter more to me than compensation.
+Finding an internship position isn’t easy, so to increase my chances, I’m also open to unpaid or volunteer-based opportunities, as long as they provide meaningful learning experience and professional growth.
 
 If you'd like to get in touch, feel free to **contact me**:
 
