@@ -20,7 +20,8 @@ This application works on any modern Microsoft Windows operating systems (32 bit
 2. Open the extracted folder.
 3. Double-click the "LaskutusOhjelma.exe" file to launch the application.
 
-The application is portable, so there's no need to install it. Just extract one of the .zip files and run LaskutusOhjelma.exe file!
+- The application is portable, so there's no need to install it.
+- Just extract one of the .zip files and run LaskutusOhjelma.exe file!
 
 ---
 
