@@ -110,7 +110,7 @@ It can be opened, for example, in Visual Studio 2022 or Visual Studio Code.
 - Let's end things with a few comments about the massive MainWindow.xaml.cs and MainWindow.xaml files, which together contain around 3,000 lines of code. The files became this big mainly because, on the frontend side, I used a TabControl layout component to simplify the task by placing the three main views of the application within a single window as tabs. (However probably not that simple for anyone else who has to read through those parts of the code. I truly feel sorry for anyone going through all that wall of text and trying to make sense of it 😄.) The files more than likely would have been quite large anyway, since if you split those 3000 lines into three separate windows, that would still be about 1000 lines per window, or about 500 if you count .xaml and .cs separately. I'm fully aware of the fact that these massive files aren't ideal, and that a developer should instead focus more on object-oriented programming. However, I did use the MVVM structure to keep things organized and manageable, so that was positive thing at least. The time we have in UAS with all of the studies going on is quite limited, so sometimes you have to take some shortcuts.
 ---
 
-## 💼 Opportunities & Contact
+## 💼 Opportunities & Inquiries
 
 As of autumn 2025, I'm an **IT student** at a University of Applied Sciences, currently looking for **IT internship opportunities** anywhere in Finland.
 English is a strength of mine, so I'm also **open to possibilities abroad**, especially within the Nordic countries or other nearby regions,
