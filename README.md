@@ -64,6 +64,7 @@ It can be opened, for example, in Visual Studio 2022 or Visual Studio Code.
 
 | Technology | Description |
 |:--|:--|
+| **Windows (32 bit or higher)** | Operating system |
 | **.NET Desktop Runtime, version 8.0** |  Execution environment |
 | **C#** | Programming language |
 | **XAML** | UI definition language |
