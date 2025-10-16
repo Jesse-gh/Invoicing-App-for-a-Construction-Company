@@ -4,7 +4,7 @@ If you already have **.NET Desktop Runtime (version 8.0 or newer)** installed, y
 
 [⬇️ Download the 1 MB version (Requires .NET Desktop Runtime)](Try%20the%20Software%20(Download%20ZIP)%20-%20Extract%20and%20Launch%20the%20EXE/1%20MB%20Version%20-%20Requires%20.NET%20installed.zip)
 
-Or download the bigger file, which doesn't require .NET Desktop Runtime at all:
+Or download the bigger file below, which doesn't require .NET Desktop Runtime at all:
 
 [⬇️ Download the 59 MB version (No .NET installation required)](Try%20the%20Software%20(Download%20ZIP)%20-%20Extract%20and%20Launch%20the%20EXE/59%20MB%20Version%20-%20No%20.NET%20required.zip)
 
