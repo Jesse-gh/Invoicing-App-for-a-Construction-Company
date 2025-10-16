@@ -125,8 +125,7 @@ Finding an internship position isn’t easy, so to increase my chances, I’m al
 
 If you'd like to get in touch, feel free to **contact me**:
 
-**Email:** jesse.honkavaara@gmail.com
-**Email:** [jesse.honkavaara@gmail.com](https://www.jesse.honkavaara@gmail.com)
+**Email:** [jesse.honkavaara@gmail.com](mailto:jesse.honkavaara@gmail.com)
 
 ---
 
