@@ -60,18 +60,20 @@ It can be opened, for example, in Visual Studio 2022 or Visual Studio Code.
 
 ---
 
-## ⚡ Technologies Used
+## ⚡ Technologies Used in Creating the Application
 
 | Technology | Description |
 |:--|:--|
-| **Windows (32 bit or higher)** | Operating system |
-| **.NET Desktop Runtime, version 8.0** |  Execution environment |
+| **Windows 11** | Operating system |
+| **.NET SDK, version 8.0** | Development toolkit used for building the application |
+| **.NET Desktop Runtime, version 8.0** | Framework required to execute the application |
 | **C#** | Programming language |
 | **XAML** | UI definition language |
 | **WPF (Windows Presentation Foundation)** | Desktop UI framework |
+| **Visual Studio Enterprise 2022** | Development environment |
 | **SQLite (Microsoft.Data.Sqlite)** | Local database engine |
 | **MVVM architecture** | Organized folder structure separating UI and business logic |
-| **Visual Studio Enterprise 2022** | Development environment |
+| **GitHub** | Portfolio project hosting |
 
 ---
 ## 💬 More about the Project
