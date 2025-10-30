@@ -1,4 +1,4 @@
-## 🧩 Try Out the Application
+## Try Out the Application
 
 This application works on any modern version of Microsoft Windows operating system (32 bit Windows OS or higher).
 - If you already have **.NET Desktop Runtime (version 8.0 or newer)** installed, you can download the smaller build:
