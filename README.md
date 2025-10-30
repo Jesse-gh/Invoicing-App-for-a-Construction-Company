@@ -25,7 +25,7 @@ Just extract one of the .zip files and run LaskutusOhjelma.exe file!
 
 ---
 
-## System Requirements
+## 🔧 System Requirements
 
 Before running the application, please ensure your system meets the following minimum requirements:
 
