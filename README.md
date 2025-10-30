@@ -111,7 +111,7 @@ It can be opened, for example, in Visual Studio 2022 or Visual Studio Code.
 
 ---
 
-## Opportunities & Inquiries
+## 👉 Opportunities & Inquiries
 
 As of autumn 2025, I'm an **IT student** at a University of Applied Sciences, currently looking for **IT internship opportunities anywhere in Finland**.
 English is a strength of mine, so I'm also **open to possibilities abroad**, especially within the Nordic countries or other nearby regions,
