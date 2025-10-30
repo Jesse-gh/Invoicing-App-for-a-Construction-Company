@@ -79,7 +79,7 @@ It can be opened, for example, in Visual Studio 2022 or Visual Studio Code.
 
 ## ⚡ Technologies Used in Creating the Application
 
-| 🔧 Technology | Description |
+| 🔧 Technology | 📄 Description |
 |:--|:--|
 | **Windows 11** | Operating system |
 | **.NET SDK, version 8.0** | Development toolkit used for building the application |
