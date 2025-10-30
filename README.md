@@ -41,7 +41,7 @@ Before running the application, please ensure your system meets the following mi
 
 ---
 
-## Source Code
+## ✍️ Source Code
 
 For IT-savvy users, the full Visual Studio project is available in the **Source Code** folder.
 It can be opened, for example, in Visual Studio 2022 or Visual Studio Code.
