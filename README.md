@@ -25,7 +25,7 @@ Just extract one of the .zip files and run LaskutusOhjelma.exe file!
 
 ---
 
-## 🖥️ System Requirements
+## System Requirements
 
 Before running the application, please ensure your system meets the following minimum requirements:
 
@@ -48,7 +48,7 @@ It can be opened, for example, in Visual Studio 2022 or Visual Studio Code.
 
 ---
 
-# 🧾 LaskutusOhjelma (Invoicing Software for a Construction Company)
+# LaskutusOhjelma (Invoicing Software for a Construction Company)
 
 *A WPF-based full-stack invoicing application built in C# for a fictional construction company, featuring SQLite, MVVM architecture, and a clean modern UI.*
 
